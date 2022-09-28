@@ -16,6 +16,8 @@
 package demo.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,21 +26,25 @@ import org.springframework.security.web.SecurityFilterChain;
  * @author Joe Grandja
  * @since 0.0.1
  */
-@EnableWebSecurity
+@Configuration
+@ImportResource({
+		"classpath:spring-configuration/*.xml"
+})
+//@EnableWebSecurity
 public class ResourceServerConfig {
 
-	// @formatter:off
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-			.mvcMatcher("/**")
-				.authorizeRequests()
-					.mvcMatchers("/**").access("hasAuthority('SCOPE_message.read')")
-					.and()
-			.oauth2ResourceServer()
-				.jwt();
-		return http.build();
-	}
-	// @formatter:on
+//	// @formatter:off
+//	@Bean
+//	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		http
+//			.mvcMatcher("/**")
+//				.authorizeRequests()
+//					.mvcMatchers("/**").access("hasAuthority('SCOPE_message.read')")
+//					.and()
+//			.oauth2ResourceServer()
+//				.jwt();
+//		return http.build();
+//	}
+//	// @formatter:on
 
 }
