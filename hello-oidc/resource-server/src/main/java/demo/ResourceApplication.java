@@ -12,10 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ResourceApplication {
 
-	@RequestMapping("/hello")
+	@RequestMapping("/unsecured")
 	@CrossOrigin(origins="*", maxAge=3600)
-	public Message hello() {
-		return new Message("Hello World");
+	public Message unsecured() {
+		return new Message("Unsecured Hello World");
+	}
+
+	@RequestMapping("/secured")
+	@CrossOrigin(origins="*", maxAge=3600)
+	public Message secured() {
+		return new Message("Secured Hello World");
 	}
 
 	public static void main(String[] args) {

@@ -10,20 +10,19 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
 	<!--
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          #issuer-uri: http://localhost:8180/realms/spring-as
-          jwk-set-uri: http://localhost:8180/realms/spring-as/protocol/openid-connect/certs
+	spring:
+	  security:
+		oauth2:
+		  resourceserver:
+			jwt:
+			  #issuer-uri: http://localhost:8180/realms/spring-as
+			  jwk-set-uri: http://localhost:8180/realms/spring-as/protocol/openid-connect/certs
 	-->
-	<authentication-manager id="authenticationManager" alias="authenticationManager">
-	</authentication-manager>
-	<http pattern="/**" authentication-manager-ref="">
+	<authentication-manager/>
+	<http pattern="/secured/**" authentication-manager-ref="">
 		<oauth2-resource-server>
 			<jwt jwk-set-uri="http://localhost:8180/realms/spring-as/protocol/openid-connect/certs"/>
 		</oauth2-resource-server>
-		<intercept-url pattern="/**" access="hasAuthority('SCOPE_message.read')"/>
+		<intercept-url pattern="/secured/**" access="hasAuthority('SCOPE_message.read')"/>
 	</http>
 </b:beans>
