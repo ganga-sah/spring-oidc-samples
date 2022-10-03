@@ -1,5 +1,6 @@
 package demo;
 
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import java.util.UUID;
 
 import org.springframework.boot.SpringApplication;
@@ -8,17 +9,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@EnableAdminServer
 @SpringBootApplication
 @RestController
+@RequestMapping("/api/v1")
 public class ResourceApplication {
 
-	@RequestMapping("/unsecured")
-	@CrossOrigin(origins="*", maxAge=3600)
-	public Message unsecured() {
-		return new Message("Unsecured Hello World");
-	}
-
-	@RequestMapping("/secured")
+	@RequestMapping("/hello")
 	@CrossOrigin(origins="*", maxAge=3600)
 	public Message secured() {
 		return new Message("Secured Hello World");

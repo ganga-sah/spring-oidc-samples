@@ -18,11 +18,18 @@
 			  #issuer-uri: http://localhost:8180/realms/spring-as
 			  jwk-set-uri: http://localhost:8180/realms/spring-as/protocol/openid-connect/certs
 	-->
-	<authentication-manager/>
-	<http pattern="/secured/**" authentication-manager-ref="">
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" xmlns="http://www.springframework.org/schema/beans">
+		<property name="locations">
+			<list>
+				<value>classpath:application.yml</value>
+			</list>
+		</property>
+	</bean>
+	<authentication-manager id="authenticationManager" alias="authenticationManager"/>
+	<http pattern="/api/v1/**" authentication-manager-ref="authenticationManager">
 		<oauth2-resource-server>
-			<jwt jwk-set-uri="http://localhost:8180/realms/spring-as/protocol/openid-connect/certs"/>
+			<jwt jwk-set-uri="${oidc.jwk-set-uri}"/>
 		</oauth2-resource-server>
-		<intercept-url pattern="/secured/**" access="hasAuthority('SCOPE_message.read')"/>
+		<intercept-url pattern="/api/v1/**" access="hasAuthority('SCOPE_message.read')"/>
 	</http>
 </b:beans>
